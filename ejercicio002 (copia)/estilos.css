@@ -1,0 +1,10 @@
+
+.imagen-grande {
+    position: relative;
+    max-width: 100px;
+}
+
+.imagen-chica {
+    position: relative;
+    max-width: 80px;
+}
