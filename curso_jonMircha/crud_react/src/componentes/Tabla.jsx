@@ -1,14 +1,15 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Persona from './Persona'
 import { FaEdit, FaTrashAlt } from 'react-icons/fa'
 
-const Tabla = ({datos}) => {
+const Tabla = ({datos,setOpcion,setDataEdit}) => {
+
   return (
-    <section className='container'>
+    <>
+      <section className='container'>
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">ID</th>
               <th scope="col">Nombre</th>
               <th scope="col">Apellido</th>
               <th scope="col">Email</th>
@@ -19,17 +20,22 @@ const Tabla = ({datos}) => {
             {datos?.map((persona) =>
             <tr key={persona.id} >
               <Persona 
-              id={persona.id} 
               nombre={persona.first_name} 
               apellido={persona.last_name} 
               email={persona.email}
               />
               <td>
-                <button className='btn btn-primary' onClick={() => cambiaEstado({opcion:"Modificar",estado:true, elemento:persona.id})}>
+                <button className='btn btn-primary' onClick={() => {
+                                                                    setOpcion("Modificar")
+                                                                    setDataEdit(persona)
+                                                                  }}>
                   <FaEdit/>                
                 </button>
                 {" "}
-                <button className='btn btn-danger' onClick={() => cambiaEstado({opcion:"Eliminar",estado:true, elemento:persona.id})}>
+                <button className='btn btn-danger' onClick={() => {
+                                                                    setOpcion("Eliminar")
+                                                                    setDataEdit(persona)
+                                                                  }}>
                   <FaTrashAlt/>
                 </button>
               </td>
@@ -38,6 +44,7 @@ const Tabla = ({datos}) => {
           </tbody>
         </table>
       </section>
+    </>
   )
 }
 

@@ -1,22 +1,67 @@
-import React, {useState} from 'react'
-import { UseFetch } from './UseFetch'
+import React, {useState,useEffect} from 'react'
 import Navegador from './Navegador'
 import Tabla from './Tabla'
+import { helpHttp } from '../helpers/helpHttp'
+import { Mensaje } from './Mensaje'
+import { Loader } from './Loader'
+import Formulario from './Formulario'
+import VentanaModal from './VentanaModal'
 
 const CrudApp = () => {
+  
+  const [bd,setBd] = useState(null)
+  const [error,setError] = useState(null)
+  const [loading,setLoading] = useState(false)
+  const [dataEdit,setDataEdit] = useState(null)
+  const [opcion,setOpcion] = useState(null)
+  const [bgColor,setBgColor] = useState(null)
+  const [estadoModal,setEstadoModal] = useState(true)
+  
 
-  const { datos, loading, error, handleCancelRequest } = UseFetch("https://my-json-server.typicode.com/EugenioKarabin/persona/personas?_start=0&_limit=5")
-  const [estadoModal, cambiaEstado] = useState({opcion:null,estado:false,elemento:0})
+  let api = helpHttp(),
+  url = "https://my-json-server.typicode.com/EugenioKarabin/persona/personas?"
+
+  useEffect(() => {
+    setLoading(true)
+    api.get(url).then((res) => {
+      if(!res.err){
+        setBd(res)
+        setError(null)
+      }else{
+        setBd(null)
+        setError(res)
+        setBgColor("#dc3545")
+      }
+      setLoading(false) 
+    })
+  }, []);
+
+  const agragaPersona = (datos) => {
+    datos.id = Date.now()
+    api.post(url,{body:datos}).then((res) => {
+      console.log(res)
+      if(!res.err){
+        setBd([...bd,res])
+      }else{
+        setError(res)
+      }
+    })
+
+  }
+  const editaPersona = (datos) => {}
+  const eliminaPersona = (datos) => {}
 
   return (
         <>
-          <Navegador/>
-          {error && <div className='d-flex justify-content-start 100vw'><p>Error: {error}</p></div>}
-          {
-            loading && <><div className='d-flex justify-content-center 100vw'><h2>Loading...</h2></div>
-            <div className='d-flex justify-content-center 100vw'><button className="btn" onClick={handleCancelRequest}>Cancelar Consulta</button></div></>
-          }
-          <Tabla datos={datos}/>
+          <Navegador setOpcion={setOpcion} setEstadoModal={setEstadoModal}/>
+          {loading && <Loader/>}
+          {error && (<Mensaje 
+                        msg={`Error ${error.status}: ${error.statusText}`}
+                        bgColor={bgColor}
+                        />
+                        )}
+          {bd && <Tabla datos={bd} setOpcion={setOpcion} setDataEdit={setDataEdit} setEstadoModal={setEstadoModal}/>}
+          {opcion && <VentanaModal estadoModal={estadoModal} setEstadoModal={setEstadoModal} opcion={opcion}/>}
         </>
   )
 }

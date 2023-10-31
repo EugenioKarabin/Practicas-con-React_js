@@ -1,26 +1,26 @@
 import React, {useState} from "react";
 import styled from 'styled-components';
-import Formulario from "./Formulario";
 import { Modal } from "bootstrap";
+import Formulario from "./Formulario";
 
-const Modal = ({opcionEleg, modificaOpcion, titulo, indice}) => {
+const VentanaModal = ({estadoModal, setEstadoModal, opcion, }) => {
 
     return (
         <>
-            {opcionEleg &&
+            {estadoModal &&
             <Fondo>
                 <ContenedorModal>
                     <Encabezado>
-                        <h3>{titulo}</h3>
+                        <h3>{opcion}</h3>
                     </Encabezado>
-                    <BotonCerrar onClick={() => modificaOpcion(!opcionEleg)}>
+                    <BotonCerrar onClick={() => setEstadoModal(!estadoModal)}>
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
                                 <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                             </svg>
                         </div>
                     </BotonCerrar>
-                    <Formulario opcion={titulo} elemento={indice}/>
+                    <Formulario setEstadoModal={setEstadoModal}/>
                 </ContenedorModal>
             </Fondo>
             }
@@ -28,7 +28,7 @@ const Modal = ({opcionEleg, modificaOpcion, titulo, indice}) => {
     );
 }
 
-export default Modal
+export default VentanaModal
 
 const Fondo = styled.h1`
     width: 100vw;

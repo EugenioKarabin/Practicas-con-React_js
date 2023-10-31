@@ -1,9 +1,11 @@
 import React, {useState} from 'react'
+import { Tooltip, Toast, Popover } from 'bootstrap'
 
-const Navegador = () => {
+const Navegador = ({setOpcion}) => {
 
-  return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    return (
+    <>    
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
                 <a className="navbar-brand" href="#">CRUD React</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,21 +17,21 @@ const Navegador = () => {
                         <a className="nav-link" 
                             aria-current="page" 
                             href="#"
-                            onClick={() => cambiaEstado({opcion:"Agregar",estado:true})}>
+                            onClick={() => setOpcion("Agregar")}>
                                 Agregar Persona
                         </a>
                         </li>
                     </ul>
-                     <div className="navbar-nav me-5 mb-2 mb-lg-0">
+                    <div className="navbar-nav me-5 mb-2 mb-lg-0">
                         <div className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" 
-                              href="#" 
-                              id="navbarDropdown" 
-                              role="button" 
-                              data-bs-toggle="dropdown" 
-                              aria-expanded="false"
-                              >                          
-                              Consultar por
+                            href="#" 
+                            id="navbarDropdown" 
+                            role="button" 
+                            data-bs-toggle="dropdown" 
+                            aria-expanded="false"
+                            >                          
+                            Consultar por
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a className="dropdown-item" href="#">ID</a></li>
@@ -39,17 +41,17 @@ const Navegador = () => {
                             </ul>
                         </div>
                     </div>   
-
                     <form className="d-flex">
                         <input className="form-control me-2" type="search" placeholder="Buscar" aria-label="Search"/>
-                        <button className="btn btn-outline-success" onClick={() => cambiaEstado({opcion:"Consultar",estado:true})}>
-                          Buscar
+                        <button className="btn btn-outline-success" onClick={() => setOpcion("Consultar")}>
+                        Buscar
                         </button>
                     </form>
                 </div>
             </div>
-      </nav>
-  )
+        </nav>
+    </>
+    )
 }
 
 export default Navegador

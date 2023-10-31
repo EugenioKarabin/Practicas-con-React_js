@@ -9,33 +9,50 @@ const iniciaForm={
     email:""
 }
 
-const Formulario = () => {
+const Formulario = ({setEstadoModal}) => {
 
     const [form,setForm] = useState({iniciaForm})
 
-    const inputControl = (e) => {}
-    const submitControl = (e) => {}
-    const resetControl = (e) => {}
+    const inputControl = (e) => {
+        setForm({
+            ...form,
+            [e.target.name]:e.target.value,
+        })
 
-  return (
-    <div>
-        <h3>Agragar</h3>
-        <form onSubmit={submitControl}>
-            <label htmlFor="nombre">Nombre: </label>
-            <input type="text" 
-            name="nombre" 
-            id="nombre" 
-            onChange={inputControl} 
-            value={form.nombre}/>
-            <label htmlFor="apellido">Apellido: </label>
-            <input type="text" name="apellido" id="apellido" onChange={inputControl} value={form.apellido}/>
-            <label htmlFor="email">Email: </label>
-            <input type="text" name="email" id="email" onChange={inputControl} value={form.email}/>
-            <input type="submit" value="Aceptar"/>
-            <input type="reset" value="Limpiar" onClick={resetControl}/>
-        </form>
-    </div>
-  )
+    }
+
+    const submitControl = (e) => {
+        e.preventDefault()
+
+        if(!form.nombre||!form.apellido||!form.email){
+            alert("Datos incompletos")
+            return
+        }
+    }
+    const resetControl = (e) => {
+        setForm(iniciaForm)
+        seleccion=null
+        setEstadoModal(!setEstadoModal)
+    }
+
+    return (
+        <div>
+            <form onSubmit={submitControl}>
+                <label htmlFor="nombre">Nombre: </label>
+                <input type="text" 
+                name="nombre" 
+                id="nombre" 
+                onChange={inputControl} 
+                value={form.nombre}/>
+                <label htmlFor="apellido">Apellido: </label>
+                <input type="text" name="apellido" id="apellido" onChange={inputControl} />
+                <label htmlFor="email">Email: </label>
+                <input type="text" name="email" id="email" onChange={inputControl} />
+                <input type="submit" value="Aceptar"/>
+                <input type="reset" value="Limpiar" onClick={resetControl}/>
+            </form>
+        </div>
+    )
 }
 
 export default Formulario
